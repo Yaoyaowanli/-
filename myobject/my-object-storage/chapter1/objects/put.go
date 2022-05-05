@@ -1,15 +1,14 @@
-package objects
+package objects01
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
-func Post(engine *gin.Engine){
+/*func Post(engine *gin.Engine){
 	engine.POST("/test/", func(context *gin.Context) {
 		fmt.Println(context.FullPath())
 		name := context.PostForm("name")
@@ -23,7 +22,7 @@ func Post(engine *gin.Engine){
 		defer file.Close()
 		io.WriteString(file,data)
 	})
-}
+}*/
 
 /*func put(w http.ResponseWriter, r *http.Request){
 	//                                                   如：127.0.0.1:1234/object/test
@@ -40,3 +39,14 @@ func Post(engine *gin.Engine){
 	io.Copy(file,r.Body)
 }*/
 
+func put01(w http.ResponseWriter, r *http.Request) {
+	f, e := os.Create(os.Getenv("STORAGE_ROOT") + "/objects/" +
+		strings.Split(r.URL.EscapedPath(), "/")[2])
+	if e != nil {
+		log.Println(e)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer f.Close()
+	io.Copy(f, r.Body)
+}

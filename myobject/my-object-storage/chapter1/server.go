@@ -1,23 +1,26 @@
 package main
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
 	"log"
-	"my-object-storage/server/objects"
+	objects01 "my-object-storage/chapter1/objects"
+	"net/http"
 	"os"
 )
 
-func init(){
+/*func init(){
 	err := os.Setenv("LISTEN_ADDRESS",":1234")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	err = os.Setenv("STORAGE_ROOT","/Users/yaoyuan/myobject/my-object-storage")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
 
-/*func main (){
+func main (){
 	//注册给定模式的处理函数Handler
 	http.HandleFunc("/test1/",objects.Handler)
 	//开启监听
@@ -28,7 +31,7 @@ func init(){
 	}
 }*/
 
-func main () {
+/*func main () {
 	//注册给定模式的处理函数Handler
 	engine := gin.Default()
 	objects.Post(engine)
@@ -40,4 +43,10 @@ func main () {
 		log.Println(err)
 		return
 	}
+}
+*/
+
+func main() {
+	http.HandleFunc("/objects/", objects01.Handler01)
+	log.Fatal(http.ListenAndServe(os.Getenv("LISTEN_ADDRESS"), nil))
 }

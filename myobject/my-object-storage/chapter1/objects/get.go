@@ -1,14 +1,14 @@
-package objects
+package objects01
 
 import (
-	"github.com/gin-gonic/gin"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
-func Get(engine *gin.Engine){
+/*func Get(engine *gin.Engine){
 	engine.GET("/test/", func(context *gin.Context) {
 		//处理get请求，取出存储的信息返回
 		name := context.PostForm("name")
@@ -21,7 +21,7 @@ func Get(engine *gin.Engine){
 		defer file.Close()
 		io.Copy(context.Writer,file)
 	})
-}
+}*/
 
 /*   使用环境变量
 func get (w http.ResponseWriter,r *http.Request){
@@ -34,5 +34,16 @@ func get (w http.ResponseWriter,r *http.Request){
 	}
 	defer file.Close()
 	io.Copy(w,file)
+}*/
+
+func get01(w http.ResponseWriter, r *http.Request) {
+	f, e := os.Open(os.Getenv("STORAGE_ROOT") + "/objects/" +
+		strings.Split(r.URL.EscapedPath(), "/")[2])
+	if e != nil {
+		log.Println(e)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	defer f.Close()
+	io.Copy(w, f)
 }
-*/
