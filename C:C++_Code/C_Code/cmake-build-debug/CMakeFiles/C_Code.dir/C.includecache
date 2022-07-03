@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/yaoyuan/C:C++_Code/C_Code/01hello_world/head.h
+
+/Users/yaoyuan/C:C++_Code/C_Code/01hello_world/hello.c
+stdio.h
+-
+head.h
+/Users/yaoyuan/C:C++_Code/C_Code/01hello_world/head.h
+
